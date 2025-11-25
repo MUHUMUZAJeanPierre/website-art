@@ -12,7 +12,6 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* Nested routes will be rendered inside <Outlet /> */}
           <Route index element={<Home />} />
           <Route path="shop" element={<Shop />} />
           <Route path="categories" element={<Categories />} />
