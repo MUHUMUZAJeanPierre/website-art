@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const [active, setActive] = useState<string>("Home");
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -13,7 +12,7 @@ const Navbar: React.FC = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // Update active item based on URL path
+  // Determine active item based on URL path
   const currentPath = location.pathname;
   const currentActive = navItems.find(item => item.path === currentPath)?.name;
 
@@ -27,7 +26,6 @@ const Navbar: React.FC = () => {
           <Link
             key={item.name}
             to={item.path}
-            onClick={() => setActive(item.name)}
             className={`relative pb-1 transition-all duration-200
               ${currentActive === item.name ? "text-green-900" : "text-green-700"}
             `}
