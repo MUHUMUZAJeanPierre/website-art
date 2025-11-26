@@ -1,84 +1,211 @@
+// import { useState } from "react";
+// import { useLocation, Link } from "react-router-dom";
+// import { Menu, X, Search } from "lucide-react";
+
+// const Navbar: React.FC = () => {
+//   const location = useLocation();
+//   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+//   const navItems = [
+//     { name: "Home", path: "/" },
+//     { name: "Shop", path: "/shop" },
+//     { name: "Categories", path: "/categories" },
+//     { name: "About", path: "/about" },
+//     { name: "Contact", path: "/contact" },
+//   ];
+
+//   const currentPath = location.pathname;
+//   const currentActive = navItems.find((item) => item.path === currentPath)?.name;
+
+//   return (
+//     <>
+//       {/* Top strip */}
+//       <div className="w-full bg-[#303030] text-[#FCFCFC] text-center py-3 text-sm" />
+
+//       {/* Main navbar */}
+//       <nav className="w-full bg-[#F7F7F7] shadow-sm">
+//         <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+//           {/* Logo */}
+//           <div className="flex items-center gap-3">
+//             <img src="" alt="Logo" className="w-10 h-10 object-contain" />
+//             <h1 className="text-sm font-semibold text-[#303030]">Gospel Walls</h1>
+//           </div>
+
+//           {/* Desktop search + links */}
+//           <div className="hidden md:flex flex-1 flex-col items-center gap-4">
+//             {/* Search */}
+//             <div className="relative w-full max-w-sm">
+//               <span className="absolute left-4 top-1/2 -translate-y-1/2">
+//                 <Search className="h-4 w-4 text-[#A4A4A3]" />
+//               </span>
+//               <input
+//                 type="text"
+//                 placeholder="Search"
+//                 className="w-full rounded-full bg-[#FCFCFC] pl-11 pr-4 py-2 shadow-md border border-[#CACACA] placeholder:text-[#A4A4A3] focus:outline-none focus:ring-2 focus:ring-[#303030]"
+//               />
+//             </div>
+
+//             {/* Nav links */}
+//             <div className="flex justify-center gap-8 text-sm font-medium text-[#5F5F5F]">
+//               {navItems.map((item) => (
+//                 <Link
+//                   key={item.name}
+//                   to={item.path}
+//                   className={`relative pb-1 transition-colors duration-200 ${
+//                     currentActive === item.name
+//                       ? "text-[#303030]"
+//                       : "text-[#5F5F5F] hover:text-[#303030]"
+//                   }`}
+//                 >
+//                   {item.name}
+//                   {currentActive === item.name && (
+//                     <span className="absolute left-0 right-0 -bottom-0.5 mx-auto h-[2px] w-full bg-[#303030] rounded-full" />
+//                   )}
+//                 </Link>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* Mobile menu button */}
+//           <button
+//             className="text-[#303030] hover:text-[#5F5F5F] md:hidden"
+//             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+//             aria-label="Toggle menu"
+//           >
+//             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+//           </button>
+//         </div>
+//       </nav>
+
+//       {/* Mobile menu */}
+//       <div
+//         className={`fixed inset-0 z-40 bg-[#F7F7F7] md:hidden transition-transform duration-300 ease-in-out ${
+//           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+//         }`}
+//       >
+//         <div className="flex flex-col items-center justify-center h-full px-6 space-y-8">
+//           {navItems.map((item) => (
+//             <Link
+//               key={item.name}
+//               to={item.path}
+//               onClick={() => setMobileMenuOpen(false)}
+//               className={`text-3xl font-medium text-[#303030] hover:text-[#5F5F5F] ${
+//                 currentActive === item.name ? "underline underline-offset-4" : ""
+//               }`}
+//             >
+//               {item.name}
+//             </Link>
+//           ))}
+
+//           {/* Mobile Search */}
+//           <div className="relative w-full max-w-xs">
+//             <span className="absolute left-4 top-1/2 -translate-y-1/2">
+//               <Search className="h-4 w-4 text-[#A4A4A3]" />
+//             </span>
+//             <input
+//               type="text"
+//               placeholder="Search"
+//               className="w-full rounded-full bg-[#FCFCFC] pl-11 pr-4 py-2 shadow-md border border-[#CACACA] placeholder:text-[#A4A4A3] focus:outline-none focus:ring-2 focus:ring-[#303030]"
+//             />
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Navbar;
 import { useState } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
+import logo from "../assets/logo.png";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
     { name: "Shop", path: "/shop" },
     { name: "Categories", path: "/categories" },
+    { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
 
   const currentPath = location.pathname;
-  const currentActive = navItems.find(item => item.path === currentPath)?.name;
-
-  // Handle search submit
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery("");
-      setMobileMenuOpen(false);
-    }
-  };
+  const currentActive =
+    navItems.find((item) => item.path === currentPath)?.name;
 
   return (
     <>
-      {/* Desktop Navbar */}
-      <nav className="w-full bg-green-200 shadow-sm py-4 px-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-green-900">Wellness</h1>
-
-        <div className="hidden md:flex gap-6 text-green-900 font-medium">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={`relative pb-1 transition-all duration-200
-                ${currentActive === item.name ? "text-green-900" : "text-green-700"}
-              `}
-            >
-              {item.name}
-              {currentActive === item.name && (
-                <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-green-900 rounded-full"></span>
-              )}
-            </Link>
-          ))}
+      {/* Reserve vertical space so content below isn't hidden by fixed header */}
+      <header className="relative h-[120px]">
+        {/* Fixed top strip */}
+        <div className="fixed top-0 left-0 w-full bg-[#303030] text-[#FCFCFC] text-center py-3 text-sm z-50">
+          {/* Optional message */}
         </div>
 
-        {/* Desktop Search */}
-        <form
-          onSubmit={handleSearchSubmit}
-          className="hidden md:block"
-        >
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search"
-            className="bg-white px-4 py-2 w-60 rounded-full border border-gray-300 shadow-sm"
-          />
-        </form>
+        {/* Fixed navbar under the top strip */}
+        <nav className="fixed top-[23px] left-0 w-full bg-[#F7F7F7] shadow-sm z-40">
+          <div className="max-w-6xl mx-auto px-4 py-3 flex flex-row items-center justify-between gap-4">
+            {/* Logo + brand */}
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+              <h1 className="text-sm font-semibold text-[#303030]">
+                Gospel Walls
+              </h1>
+            </div>
 
-        {/* Mobile menu toggle */}
-        <button
-          className="md:hidden text-green-900 hover:text-green-700"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </nav>
+            {/* Desktop search + nav links */}
+            <div className="hidden md:flex flex-1 flex-col items-center gap-4">
+              {/* Search */}
+              <div className="relative w-full max-w-sm">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <Search className="h-4 w-4 text-[#A4A4A3]" />
+                </span>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full rounded-full bg-[#FCFCFC] pl-11 pr-4 py-2 shadow-md border border-[#CACACA] placeholder:text-[#A4A4A3] focus:outline-none focus:ring-2 focus:ring-[#303030]"
+                />
+              </div>
 
-      {/* Mobile Menu */}
+              {/* Nav links */}
+              <div className="flex justify-center gap-8 text-sm font-medium text-[#5F5F5F]">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`relative pb-1 transition-colors duration-200 ${
+                      currentActive === item.name
+                        ? "text-[#303030]"
+                        : "text-[#5F5F5F] hover:text-[#303030]"
+                    }`}
+                  >
+                    {item.name}
+                    {currentActive === item.name && (
+                      <span className="absolute left-0 right-0 -bottom-0.5 mx-auto h-[2px] w-full bg-[#303030] rounded-full" />
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile menu button (right side, aligned horizontally with logo) */}
+            <button
+              className="text-[#303030] hover:text-[#5F5F5F] md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Mobile full-screen menu */}
       <div
-        className={`fixed inset-0 z-40 bg-green-200 md:hidden transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 z-40 bg-[#F7F7F7] md:hidden transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -88,7 +215,7 @@ const Navbar: React.FC = () => {
               key={item.name}
               to={item.path}
               onClick={() => setMobileMenuOpen(false)}
-              className={`text-3xl font-medium text-green-900 hover:text-green-700 ${
+              className={`text-3xl font-medium text-[#303030] hover:text-[#5F5F5F] ${
                 currentActive === item.name ? "underline underline-offset-4" : ""
               }`}
             >
@@ -96,16 +223,17 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
 
-          {/* Mobile Search */}
-          <form onSubmit={handleSearchSubmit} className="w-full flex justify-center">
+          {/* Mobile search */}
+          <div className="relative w-full max-w-xs">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2">
+              <Search className="h-4 w-4 text-[#A4A4A3]" />
+            </span>
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search"
-              className="bg-white px-4 py-2 w-72 rounded-full border border-gray-300 shadow-sm"
+              className="w-full rounded-full bg-[#FCFCFC] pl-11 pr-4 py-2 shadow-md border border-[#CACACA] placeholder:text-[#A4A4A3] focus:outline-none focus:ring-2 focus:ring-[#303030]"
             />
-          </form>
+          </div>
         </div>
       </div>
     </>
